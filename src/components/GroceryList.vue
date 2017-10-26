@@ -2,29 +2,41 @@
 <template>
   <div class="hello container">
     <h1>{{ msg }}</h1>
-    <div class="row">
-      <div class="col-md-6">
-        <h2>Add New Item</h2>
-        <form id="form" class="form-inline" v-on:submit.prevent="addGrocery">
-          <div class="form-group">
-            <label for="groceryTitle">Title:</label>
-            <input type="text" id="groceryTitle" class="form-control" v-model="newGrocery.title">
-          </div>
-          <div class="form-group">
-            <label for="groceryQuantity">Quantity:</label>
-            <input type="text" id="groceryQuantity" class="form-control" v-model="newGrocery.quantity">
-          </div>
-          <input type="submit" class="btn btn-primary" value="Add to list">
-        </form>
+    <h2>Add New Item</h2>
+    <form id="form" class="form-inline row" v-on:submit.prevent="addGrocery">
+      <div class="col-md-6 mb-3">
+        <input type="text" class="form-control" id="groceryTitle" placeholder="Enter grocery title" v-model="newGrocery.title" required>
+        <div class="invalid-feedback">
+          Please provide a title to the grocery you wish to add.
+        </div>
       </div>
-      <div class="col-md-6">
-        <h2>Current List</h2>
-        <ul>
-          <li v-for="grocery in groceries">
-            {{grocery.title}} - {{grocery.quantity}}
-          </li>
-        </ul>
+      <div class="col-md-3 mb-3">
+        <input type="number" class="form-control" id="groceryQuantity" placeholder="Enter quantity" v-model="newGrocery.quantity" required>
+        <div class="invalid-feedback">
+          Please enter a quantity.
+        </div>
       </div>
+      <div class="col-md-3 mb-3">
+        <input type="submit" class="btn btn-primary" value="Add to list">
+      </div>
+    </form>
+
+    <h2>Current List</h2>
+    <div class="row table-bordered">
+      <table class="table thead-light">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Grocery Title</th>
+            <th scope="col">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="grocery in groceries">
+            <td>{{grocery.title}}</td>
+            <td>{{grocery.quantity}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -71,13 +83,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1 {
-  margin: 30px 0;
+  margin: 30px 0 15px;
   font-weight: normal;
 }
 
 h2 {
-  margin: 0 0 15px;
-  font-weight: normal;
+  margin: 30px 0 20px;
+  font-size: 1.4em;
+  text-align: center;
+  font-weight: bold;
 }
 
 ul {
@@ -92,6 +106,14 @@ li {
 
 a {
   color: #42b983;
+}
+
+table {
+  margin: 0;
+}
+
+.form-control, .btn-primary {
+  width: 100%;
 }
 
 div[class*="col-"] {
