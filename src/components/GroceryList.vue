@@ -1,17 +1,28 @@
+
 <template>
   <div class="hello container">
     <h1>{{ msg }}</h1>
     <div class="row">
       <div class="col-md-6">
         <h2>Add New Item</h2>
-        <input type="text" value="" name="title" placeholder="Enter item title here..." required />
-        <input type="number" value="1" name="quantity" required />
-        <button>Add to list</button>
+        <form id="form" class="form-inline" v-on:submit.prevent="addGrocery">
+          <div class="form-group">
+            <label for="groceryTitle">Title:</label>
+            <input type="text" id="groceryTitle" class="form-control" v-model="newGrocery.title">
+          </div>
+          <div class="form-group">
+            <label for="groceryQuantity">Quantity:</label>
+            <input type="text" id="groceryQuantity" class="form-control" v-model="newGrocery.quantity">
+          </div>
+          <input type="submit" class="btn btn-primary" value="Add to list">
+        </form>
       </div>
       <div class="col-md-6">
         <h2>Current List</h2>
         <ul>
-          <li>To be populated by database.</li>
+          <li v-for="grocery in groceries">
+            {{grocery.title}} - {{grocery.quantity}}
+          </li>
         </ul>
       </div>
     </div>
@@ -19,12 +30,40 @@
 </template>
 
 <script>
+import Firebase from 'firebase'
+
+let config = {
+  apiKey: 'AIzaSyDm0HCT7YEseSSdeOxAQmGD_GVWaPuLIiA',
+  authDomain: 'grocery-list-64e5a.firebaseapp.com',
+  databaseURL: 'https://grocery-list-64e5a.firebaseio.com',
+  storageBucket: 'grocery-list-64e5a.appspot.com',
+  messagingSenderId: '1051666625921'
+}
+
+let app = Firebase.initializeApp(config)
+let db = app.database()
+let groceryListRef = db.ref('grocery_list')
+
 export default {
   name: 'GroceryList',
   data () {
     return {
-      msg: 'Create Your Grocery List Below'
+      msg: 'Create Your Grocery List Below',
+      newGrocery: {
+        title: '',
+        quantity: ''
+      }
     }
+  },
+  methods: {
+    addGrocery: function () {
+      groceryListRef.push(this.newGrocery)
+      this.newGrocery.title = ''
+      this.newGrocery.quantity = ''
+    }
+  },
+  firebase: {
+    groceries: groceryListRef
   }
 }
 </script>
