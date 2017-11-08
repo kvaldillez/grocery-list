@@ -45,11 +45,11 @@
 import Firebase from 'firebase'
 
 let config = {
-  apiKey: 'AIzaSyDm0HCT7YEseSSdeOxAQmGD_GVWaPuLIiA',
-  authDomain: 'grocery-list-64e5a.firebaseapp.com',
-  databaseURL: 'https://grocery-list-64e5a.firebaseio.com',
-  storageBucket: 'grocery-list-64e5a.appspot.com',
-  messagingSenderId: '1051666625921'
+  apiKey: 'ENTER_API_KEY_HERE',
+  authDomain: 'ENTER_AUTH_DOMAIN_HERE',
+  databaseURL: 'ENTER_DB_URL_HERE',
+  storageBucket: 'ENTER_STORAGE_BUCKET_HERE',
+  messagingSenderId: 'ENTER_SENDER_ID_HERE'
 }
 
 let app = Firebase.initializeApp(config)
